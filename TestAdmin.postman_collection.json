@@ -1,0 +1,3124 @@
+{
+	"info": {
+		"_postman_id": "f248402d-915e-4322-8d06-3b00c6afba60",
+		"name": "TestAdmin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Building",
+			"item": [
+				{
+					"name": "1.  Auth -> singin (200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "333256ac-78a6-4cd8-927d-9a860f85fbc7",
+								"exec": [
+									"//Распарсили responseBody",
+									"var jsonData = JSON.parse(responseBody);",
+									"// сохранили в переменную коллекции accessToken",
+									"pm.collectionVariables.set(\"accessToken\", jsonData.result.accessToken)",
+									"//postman.setGlobalVariable(\"accessToken\", jsonData.result.accessToken)   / вариант с сохранением глобальной переменной",
+									" console.log(jsonData)",
+									" ",
+									" ",
+									"//Создаем схему",
+									"var Ajv = require('ajv'),",
+									"    ajv = new Ajv({logger: console}),",
+									"    schema = {",
+									"        \"type\":\"object\",",
+									"        \"required\"  :[\"tid\",\"action\",\"method\",\"type\",\"result\",\"message\"],",
+									"        \"properties\": {",
+									"            \"tid\":{\"type\":\"integer\"},",
+									"            \"action\":{\"type\":\"string\"},",
+									"            \"method\":{\"type\":\"string\"},",
+									"            \"type\":{\"type\":\"string\"},",
+									"            \"result\":{\"type\":\"object\",",
+									"                \"required\" :[\"accessToken\",\"refreshToken\",\"exp\"],",
+									"                \"properties\":{",
+									"                    \"accessToken\":{\"type\":\"string\"},",
+									"                    \"refreshToken\":{\"type\":\"string\"},",
+									"                    \"exp\":{\"type\":\"integer\"}",
+									"                }",
+									"            },",
+									"            \"message\":{\"type\":\"null\"}",
+									"        }",
+									"    }",
+									"",
+									"pm.test('Schema is valid', function() {",
+									"    pm.expect(ajv.validate(schema, jsonData)).to.be.true;",
+									"   });",
+									"   ",
+									"  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"rpc\",\n    \"action\": \"auth\",\n    \"method\": \"signin\",\n    \"tid\": 1583408237,\n    \"data\": {\n        \"email\": \"admin@ossystem.ua\",\n        \"password\": \"1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+							"protocol": "https",
+							"host": [
+								"dev",
+								"api",
+								"hm",
+								"ossystem",
+								"ua"
+							],
+							"path": [
+								"api",
+								"admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"rpc\",\n    \"action\": \"auth\",\n    \"method\": \"signin\",\n    \"tid\": 1583408237,\n    \"data\": {\n        \"email\": \"user@ossystem.ua\",\n        \"password\": \"1\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/admin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Request-Id",
+									"value": "f06ca8ed-d8ba-4d01-9d59-058c6af208ee"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "537"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"219-9lQR+YW2CB0lb+J47JyMp/BTR5w\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Mar 2020 15:14:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1583408237,\n    \"action\": \"auth\",\n    \"method\": \"signin\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1OWM5YjRlLTYzMzItMTFlYS1iYzU1LTAyNDJhYzEzMDAwMyIsImV4cCI6MTU4MzQyMTg2OSwiaWF0IjoxNTgzNDIxMjY5fQ.CJC5P8_3V6V0acQ1bycrbag0GVQo1FxCNx4uhKL80Hc\",\n        \"refreshToken\": \"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1OWM5YjRlLTYzMzItMTFlYS1iYzU1LTAyNDJhYzEzMDAwMyIsImlhdCI6MTU4MzQyMTI2OX0.iNOcZ9b2WkUH-lhGgQFih0glj-DfMm8UVgWO3QprqEl_s8djlzsJbgM3kYHnLpCXbJ2ZzyHJisHce_RbcFMGaw\",\n        \"exp\": 1583421869\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "Type exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"rpc\",\n    \"action\": \"auth\",\n    \"method\": \"signin\",\n    \"tid\": 1583408237,\n    \"data\": {\n        \"email\": \"user@ossystem.ua11\",\n        \"password\": \"1\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/admin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Request-Id",
+									"value": "af250183-705d-4edf-9ea0-1b4fc2bd2134"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "117"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"75-fJhxgATjFUBerc+g/jhZ52tGaOk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Mar 2020 15:15:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1583408237,\n    \"action\": \"auth\",\n    \"method\": \"signin\",\n    \"type\": \"exception\",\n    \"result\": null,\n    \"message\": \"Record is not found\"\n}"
+						},
+						{
+							"name": "1.  Auth -> singin (200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"rpc\",\n    \"action\": \"auth\",\n    \"method\": \"signin\",\n    \"tid\": 1583408237,\n    \"data\": {\n        \"email\": \"admin@ossystem.ua\",\n        \"password\": \"1\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://727e46e5-3d53-4492-93a9-93f0ccfa9387.mock.pstmn.io",
+									"protocol": "https",
+									"host": [
+										"727e46e5-3d53-4492-93a9-93f0ccfa9387",
+										"mock",
+										"pstmn",
+										"io"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 Mar 2020 07:46:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "27d6554aa71ee09204f29ed3100f4b36"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"219-1VM7TZiX1tJEQB4IP80KfzsAzyk\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1583408237,\n    \"action\": \"auth\",\n    \"method\": \"signin\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhZTkxZjVhLTYzMzItMTFlYS1iYzU1LTAyNDJhYzEzMDAwMyIsImV4cCI6MTU4NTEyMjk3MSwiaWF0IjoxNTg1MTIyMzcxfQ.gcdF7GbF38y6PpCHRuLM9gO8LuPPteNadudOyxUPqJk\",\n        \"refreshToken\": \"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhZTkxZjVhLTYzMzItMTFlYS1iYzU1LTAyNDJhYzEzMDAwMyIsImlhdCI6MTU4NTEyMjM3MX0.Qo8JTRrS8cra1umCOrsaMjo1vZVGokrrMklR1rWybxt4YRSQqr9xKlcxbhZk7Gu5Fp055lVE6Q7_g4WYZj05JQ\",\n        \"exp\": \"asasaddesfer421323\"\n    },\n    \"message\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "2. Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8591e808-1081-40d6-b355-90fc41d9e7f2",
+								"exec": [
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"//postman.setGlobalVariable(\"BuildingId\", jsonData.result.id)",
+									"pm.collectionVariables.set(\"BuildingId\", jsonData.result.id)",
+									"",
+									"console.log(jsonData)",
+									"",
+									"",
+									"//Создаем схему",
+									"var Ajv = require('ajv'),",
+									"    ajv = new Ajv({logger: console}),",
+									"    schema ={",
+									"        \"type\":\"object\",",
+									"        \"required\":[\"tid\",\"action\",\"method\",\"type\",\"result\"],",
+									"        \"properties\":{",
+									"            \"tid\":{\"type\":\"integer\"},",
+									"            \"action\":{\"type\":\"string\"},",
+									"            \"method\":{\"type\":\"string\"},",
+									"            \"type\":{\"type\":\"string\"},",
+									"            \"result\":{\"type\":\"object\",",
+									"                \"required\":[\"id\"],",
+									"                \"properties\":{",
+									"                    \"id\":{\"type\":\"integer\"}",
+									"                }",
+									"            },",
+									"            \"message\":{\"type\":\"null\"}",
+									"        }",
+									"    }",
+									"pm.test('Schema is valid', function() {",
+									"    pm.expect(ajv.validate(schema, jsonData)).to.be.true;",
+									"   });",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman."
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"action\": \"building\",\n\"method\": \"create\",\n\"tid\": 1,\n\"type\": \"rpc\",\n\"data\": {\n\"city_id\": 1105, \n\"street_id\": 11325, \n\"hoa_id\": 1, \n\"number\": {{$randomInt}}, \n\"number_add\": \"b\", \n\"inServiceDate\": 1583835701810, \n\"square\": 777\n}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+							"protocol": "https",
+							"host": [
+								"dev",
+								"api",
+								"hm",
+								"ossystem",
+								"ua"
+							],
+							"path": [
+								"api",
+								"admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getAll(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"getAll\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"filter\": {\n\t\t\t\"street\":\"Шев\",\n\t\t\t\"number\": 5\n\t\t\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 08:14:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6ea0e7c7fe1693e86ef168d74cd05840"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"356-eqnYAvUi7QfFRg3syruAdOU3SDw\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"getAll\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"data\": [\n            {\n                \"id\": 10,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 8577,\n                \"totalQty\": 0,\n                \"balance\": 0\n            },\n            {\n                \"id\": 11,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 1488,\n                \"totalQty\": 0,\n                \"balance\": 0\n            }\n        ],\n        \"meta\": {\n            \"offset\": null,\n            \"total\": 2\n        },\n        \"totalBalance\": 0,\n        \"totalBuildings\": 12,\n        \"hoas\": [\n            {\n                \"id\": 1,\n                \"name\": \"ЖК Вернисаж\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"ЖК Южный\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"create\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"city_id\": 1105, \n\t\t\"street_id\": 11325, \n\t\t\"hoa_id\": 1, \n\t\t\"number\": 9, \n\t\t\"number_add\": \"b\", \n\t\t\"inServiceDate\": 1583835701810, \n\t\t\"square\": 777\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:41:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1ae6ed5ace13c1d114b9e41c4bf0d172"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e-QYBujBIMw6b/68MX3PYLRC+qH60\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"create\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 14\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"delete\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": 149\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:45:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "416ca9f7bc4387ffb545a20520532138"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5f-YMkhZbPWZ71d6mR/ZxGelDAT5Cg\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"delete\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 149\n    },\n    \"message\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "3. Get all buildings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c599b6c1-781c-4c1d-997c-13c679d402c8",
+								"exec": [
+									"    // const jsonData = pm.response.json();",
+									"     var jsonData = JSON.parse(responseBody);",
+									"        console.log(jsonData)",
+									"",
+									"pm.collectionVariables.set(\"BuildId\",jsonData.result.data[0].id)        //Сохранили в переменную {{BuildId}} первый id",
+									"",
+									"    ",
+									"    pm.test(\"Check that we have all declared fields\", function() {",
+									"    pm.expect(jsonData).to.have.property(\"tid\");",
+									"    pm.expect(jsonData).to.have.property(\"action\");",
+									"    pm.expect(jsonData).to.have.property(\"method\");",
+									"    pm.expect(jsonData).to.have.property(\"type\");",
+									"    pm.expect(jsonData).to.have.property(\"result\");",
+									"    pm.expect(jsonData.result.data[0]).to.have.property(\"id\");",
+									"    pm.expect(jsonData).to.have.property(\"message\");",
+									"    pm.response.to.have.header( \"Content-Type\",\"application/json; charset=utf-8\")",
+									"       });",
+									"",
+									"",
+									"",
+									"",
+									"var Ajv = require('ajv'),",
+									"    ajv = new Ajv({logger: console}),",
+									"    schema = {",
+									"   \"type\":\"object\",",
+									"   \"required\":[\"tid\",\"action\",\"method\",\"type\",\"result\"",
+									"   ],",
+									"   \"properties\":{",
+									"      \"tid\":{",
+									"         \"type\":\"number\"",
+									"      },",
+									"      \"action\":{",
+									"         \"type\":\"string\"",
+									"      },",
+									"      \"method\":{",
+									"         \"type\":\"string\"",
+									"      },",
+									"      \"type\":{",
+									"         \"type\":\"string\",",
+									"         \"maxLength\":4",
+									"      },",
+									"      \"result\":{",
+									"         \"type\":\"object\",",
+									"         \"properties\":{",
+									"            \"data\":{",
+									"               \"type\":\"array\",",
+									"               \"items\":{",
+									"                  \"required\":[",
+									"                     \"id\",",
+									"                     \"street_id\"",
+									"                  ],",
+									"                  \"properties\":{",
+									"                     \"id\":{",
+									"                        \"type\":\"number\"",
+									"                     },",
+									"                     \"street_id\":{",
+									"                        \"type\":\"number\",",
+									"                        \"maximum\":1111111",
+									"                     },",
+									"                     \"city_id\":{",
+									"                        \"type\":\"number\",",
+									"                        \"maximum\":1111111",
+									"                     },",
+									"                     \"number\":{",
+									"                        \"type\":\"number\",",
+									"                        \"maximum\":1111111",
+									"                     },",
+									"                   //  \"number_add\":{",
+									"                    //    \"type\":\"null\"",
+									"                    // },",
+									"                     \"inServiceDate\":{",
+									"                        \"type\":\"number\"",
+									"                     },",
+									"                     \"hoaName\":{",
+									"                        \"type\":\"string\"",
+									"                     },",
+									"                     \"cityName\":{",
+									"                        \"type\":\"string\"",
+									"                     },",
+									"                     \"hoaId\":{",
+									"                        \"type\":\"number\"",
+									"                     },",
+									"                     \"street_name\":{",
+									"                        \"type\":\"string\"",
+									"                     },",
+									"                     \"type\":{",
+									"                        \"type\":\"string\"",
+									"                     },",
+									"                     \"totalSquare\":{",
+									"                        \"type\":\"number\"",
+									"                     },",
+									"                     \"totalQty\":{",
+									"                        \"type\":\"number\"",
+									"                     },",
+									"                     \"balance\":{",
+									"                        \"type\":\"number\"",
+									"                     }",
+									"                  }",
+									"               }",
+									"            },",
+									"            \"meta\":{",
+									"               \"type\":\"object\",",
+									"               \"properties\":{",
+									"                  \"offset\":{",
+									"                     \"type\":\"null\"",
+									"                  },",
+									"                  \"total\":{",
+									"                     \"type\":\"number\"",
+									"                  }",
+									"               }",
+									"            },",
+									"            \"totalBalance\":{",
+									"               \"type\":\"number\"",
+									"            },",
+									"            \"totalBuildings\":{",
+									"               \"type\":\"number\"",
+									"            },",
+									"            \"hoas\":{",
+									"               \"type\":\"array\",",
+									"               \"items\":{",
+									"                  \"properties\":{",
+									"                     \"id\":{",
+									"                        \"type\":\"number\"",
+									"                     },",
+									"                     \"name\":{",
+									"                        \"type\":\"string\"",
+									"                     },",
+									"                     \"id\":{",
+									"                        \"type\":\"number\"",
+									"                     },",
+									"                     \"name\":{",
+									"                        \"type\":\"string\"",
+									"                     }",
+									"                  }",
+									"               }",
+									"            }",
+									"         }",
+									"      },",
+									"      \"message\":{",
+									"         \"type\":\"null\"",
+									"      }",
+									"   }",
+									"}",
+									"",
+									"            ",
+									"        ",
+									"",
+									"pm.test('Schema is valid', function() {",
+									"    pm.expect(ajv.validate(schema, jsonData)).to.be.true;",
+									"   });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1OWM5YjRlLTYzMzItMTFlYS1iYzU1LTAyNDJhYzEzMDAwMyIsImV4cCI6MTU4MzkyODAyNywiaWF0IjoxNTgzOTI3NDI2fQ.1baPr1uVMeJig5Sn29WcXVWML9ZUjW3ZVTVmsk6a5ho",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"getAll\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"filter\": {\n\t\t\t\"street\":\"вул. Пляжна\",\n\t\t\t\"number\": \"\"\n\t\t\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+							"protocol": "https",
+							"host": [
+								"dev",
+								"api",
+								"hm",
+								"ossystem",
+								"ua"
+							],
+							"path": [
+								"api",
+								"admin"
+							]
+						},
+						"description": "get all buildings"
+					},
+					"response": [
+						{
+							"name": "getAll(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"getAll\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"filter\": {\n\t\t\t\"street\":\"Шев\",\n\t\t\t\"number\": 5\n\t\t\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 08:14:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6ea0e7c7fe1693e86ef168d74cd05840"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"356-eqnYAvUi7QfFRg3syruAdOU3SDw\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"getAll\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"data\": [\n            {\n                \"id\": 10,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 8577,\n                \"totalQty\": 0,\n                \"balance\": 0\n            },\n            {\n                \"id\": 11,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 1488,\n                \"totalQty\": 0,\n                \"balance\": 0\n            }\n        ],\n        \"meta\": {\n            \"offset\": null,\n            \"total\": 2\n        },\n        \"totalBalance\": 0,\n        \"totalBuildings\": 12,\n        \"hoas\": [\n            {\n                \"id\": 1,\n                \"name\": \"ЖК Вернисаж\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"ЖК Южный\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "4. Get one building",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff39008b-30b9-4a13-9025-de7a9738a392",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"console.log(jsonData)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImExNTY0NzEwLTdkMGItNDE4OS1hNWZkLTA0ZTY4Zjk2OGM1MCIsImV4cCI6MTU4MzkyODI1OCwiaWF0IjoxNTgzOTI3NjU4fQ.Ks7L9Qxyw21nr--awl4Vtw4XQDEZVUzW7zHFt4Qi-H8",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"get\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+							"protocol": "https",
+							"host": [
+								"dev",
+								"api",
+								"hm",
+								"ossystem",
+								"ua"
+							],
+							"path": [
+								"api",
+								"admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"delete\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": 149\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:45:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "416ca9f7bc4387ffb545a20520532138"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5f-YMkhZbPWZ71d6mR/ZxGelDAT5Cg\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"delete\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 149\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"create\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"city_id\": 1105, \n\t\t\"street_id\": 11325, \n\t\t\"hoa_id\": 1, \n\t\t\"number\": 9, \n\t\t\"number_add\": \"b\", \n\t\t\"inServiceDate\": 1583835701810, \n\t\t\"square\": 777\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:41:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1ae6ed5ace13c1d114b9e41c4bf0d172"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e-QYBujBIMw6b/68MX3PYLRC+qH60\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"create\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 14\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "getAll(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"getAll\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"filter\": {\n\t\t\t\"street\":\"Шев\",\n\t\t\t\"number\": 5\n\t\t\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 08:14:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6ea0e7c7fe1693e86ef168d74cd05840"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"356-eqnYAvUi7QfFRg3syruAdOU3SDw\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"getAll\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"data\": [\n            {\n                \"id\": 10,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 8577,\n                \"totalQty\": 0,\n                \"balance\": 0\n            },\n            {\n                \"id\": 11,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 1488,\n                \"totalQty\": 0,\n                \"balance\": 0\n            }\n        ],\n        \"meta\": {\n            \"offset\": null,\n            \"total\": 2\n        },\n        \"totalBalance\": 0,\n        \"totalBuildings\": 12,\n        \"hoas\": [\n            {\n                \"id\": 1,\n                \"name\": \"ЖК Вернисаж\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"ЖК Южный\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "5. Update building",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33c62197-b63b-47ef-8753-c0afea68f019",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"console.log(jsonData)",
+									"",
+									"//Создаем схему",
+									"var Ajv = require('ajv'),",
+									"    ajv = new Ajv({logger: console}),",
+									"    schema ={",
+									"        \"type\":\"object\",",
+									"        \"required\":[\"tid\",\"action\",\"method\",\"type\",\"result\"],",
+									"        \"properties\":{",
+									"            \"tid\":{\"type\":\"integer\"},",
+									"            \"action\":{\"type\":\"string\"},",
+									"            \"method\":{\"type\":\"string\"},",
+									"            \"type\":{\"type\":\"string\"},",
+									"            \"result\":{\"type\":\"object\",",
+									"                \"required\":[\"id\"],",
+									"                \"properties\":{",
+									"                    \"id\":{\"type\":\"integer\"}",
+									"                }",
+									"            },",
+									"            \"message\":{\"type\":\"null\"}",
+									"        }",
+									"    }",
+									"pm.test('Schema is valid', function() {",
+									"    pm.expect(ajv.validate(schema, jsonData)).to.be.true;",
+									"   });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImExNTY0NzEwLTdkMGItNDE4OS1hNWZkLTA0ZTY4Zjk2OGM1MCIsImV4cCI6MTU4MzkyODI1OCwiaWF0IjoxNTgzOTI3NjU4fQ.Ks7L9Qxyw21nr--awl4Vtw4XQDEZVUzW7zHFt4Qi-H8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"update\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": {{BuildingId}},\n\t\t\"number\": 90,\n\t\t\"number_add\": \"z\",\n\t\t\"city_id\": 1105,\n\t\t\"street_id\": 11325,\n\t\t\"hoa_id\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+							"protocol": "https",
+							"host": [
+								"dev",
+								"api",
+								"hm",
+								"ossystem",
+								"ua"
+							],
+							"path": [
+								"api",
+								"admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "5. Update building",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImExNTY0NzEwLTdkMGItNDE4OS1hNWZkLTA0ZTY4Zjk2OGM1MCIsImV4cCI6MTU4MzkyODI1OCwiaWF0IjoxNTgzOTI3NjU4fQ.Ks7L9Qxyw21nr--awl4Vtw4XQDEZVUzW7zHFt4Qi-H8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"update\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": {{BuildingId}},\n\t\t\"number\": 90,\n\t\t\"number_add\": \"z\",\n\t\t\"city_id\": 1105,\n\t\t\"street_id\": 11325,\n\t\t\"hoa_id\": 1\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 Mar 2020 07:36:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "f11ebb8e84a12fbc03fee7b25a5a7612"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e-ropyZs3z1aTFePmnALTRrSsrE1M\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"update\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 58\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"delete\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": 149\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:45:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "416ca9f7bc4387ffb545a20520532138"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5f-YMkhZbPWZ71d6mR/ZxGelDAT5Cg\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"delete\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 149\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"create\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"city_id\": 1105, \n\t\t\"street_id\": 11325, \n\t\t\"hoa_id\": 1, \n\t\t\"number\": 9, \n\t\t\"number_add\": \"b\", \n\t\t\"inServiceDate\": 1583835701810, \n\t\t\"square\": 777\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:41:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1ae6ed5ace13c1d114b9e41c4bf0d172"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e-QYBujBIMw6b/68MX3PYLRC+qH60\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"create\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 14\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "getAll(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"getAll\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"filter\": {\n\t\t\t\"street\":\"Шев\",\n\t\t\t\"number\": 5\n\t\t\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 08:14:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6ea0e7c7fe1693e86ef168d74cd05840"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"356-eqnYAvUi7QfFRg3syruAdOU3SDw\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"getAll\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"data\": [\n            {\n                \"id\": 10,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 8577,\n                \"totalQty\": 0,\n                \"balance\": 0\n            },\n            {\n                \"id\": 11,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 1488,\n                \"totalQty\": 0,\n                \"balance\": 0\n            }\n        ],\n        \"meta\": {\n            \"offset\": null,\n            \"total\": 2\n        },\n        \"totalBalance\": 0,\n        \"totalBuildings\": 12,\n        \"hoas\": [\n            {\n                \"id\": 1,\n                \"name\": \"ЖК Вернисаж\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"ЖК Южный\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "4. Get one building Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff39008b-30b9-4a13-9025-de7a9738a392",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"console.log(jsonData)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImExNTY0NzEwLTdkMGItNDE4OS1hNWZkLTA0ZTY4Zjk2OGM1MCIsImV4cCI6MTU4MzkyODI1OCwiaWF0IjoxNTgzOTI3NjU4fQ.Ks7L9Qxyw21nr--awl4Vtw4XQDEZVUzW7zHFt4Qi-H8",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"get\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+							"protocol": "https",
+							"host": [
+								"dev",
+								"api",
+								"hm",
+								"ossystem",
+								"ua"
+							],
+							"path": [
+								"api",
+								"admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"delete\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": 149\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:45:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "416ca9f7bc4387ffb545a20520532138"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5f-YMkhZbPWZ71d6mR/ZxGelDAT5Cg\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"delete\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 149\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "getAll(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"getAll\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"filter\": {\n\t\t\t\"street\":\"Шев\",\n\t\t\t\"number\": 5\n\t\t\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 08:14:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6ea0e7c7fe1693e86ef168d74cd05840"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"356-eqnYAvUi7QfFRg3syruAdOU3SDw\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"getAll\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"data\": [\n            {\n                \"id\": 10,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 8577,\n                \"totalQty\": 0,\n                \"balance\": 0\n            },\n            {\n                \"id\": 11,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 1488,\n                \"totalQty\": 0,\n                \"balance\": 0\n            }\n        ],\n        \"meta\": {\n            \"offset\": null,\n            \"total\": 2\n        },\n        \"totalBalance\": 0,\n        \"totalBuildings\": 12,\n        \"hoas\": [\n            {\n                \"id\": 1,\n                \"name\": \"ЖК Вернисаж\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"ЖК Южный\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"create\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"city_id\": 1105, \n\t\t\"street_id\": 11325, \n\t\t\"hoa_id\": 1, \n\t\t\"number\": 9, \n\t\t\"number_add\": \"b\", \n\t\t\"inServiceDate\": 1583835701810, \n\t\t\"square\": 777\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:41:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1ae6ed5ace13c1d114b9e41c4bf0d172"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e-QYBujBIMw6b/68MX3PYLRC+qH60\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"create\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 14\n    },\n    \"message\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "6. Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "018f3171-2f2b-4da5-8c4e-329697f0cdc3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"   console.log(jsonData)",
+									"//Создаем схему",
+									"var Ajv = require('ajv'),",
+									"    ajv = new Ajv({logger: console}),",
+									"    schema ={",
+									"        \"type\":\"object\",",
+									"        \"required\":[\"tid\",\"action\",\"method\",\"type\",\"result\"],",
+									"        \"properties\":{",
+									"            \"tid\":{\"type\":\"integer\"},",
+									"            \"action\":{\"type\":\"string\"},",
+									"            \"method\":{\"type\":\"string\"},",
+									"            \"type\":{\"type\":\"string\"},",
+									"            \"result\":{\"type\":\"object\",",
+									"                \"required\":[\"id\"],",
+									"                \"properties\":{",
+									"                    \"id\":{\"type\":\"integer\"}",
+									"                }",
+									"            },",
+									"            \"message\":{\"type\":\"null\"}",
+									"        }",
+									"    }",
+									"pm.test('Schema is valid', function() {",
+									"    pm.expect(ajv.validate(schema, jsonData)).to.be.true;",
+									"   });",
+									"   ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImExNTY0NzEwLTdkMGItNDE4OS1hNWZkLTA0ZTY4Zjk2OGM1MCIsImV4cCI6MTU4MzkyODI1OCwiaWF0IjoxNTgzOTI3NjU4fQ.Ks7L9Qxyw21nr--awl4Vtw4XQDEZVUzW7zHFt4Qi-H8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"delete\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": {{BuildingId}}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+							"protocol": "https",
+							"host": [
+								"dev",
+								"api",
+								"hm",
+								"ossystem",
+								"ua"
+							],
+							"path": [
+								"api",
+								"admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"create\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"city_id\": 1105, \n\t\t\"street_id\": 11325, \n\t\t\"hoa_id\": 1, \n\t\t\"number\": 9, \n\t\t\"number_add\": \"b\", \n\t\t\"inServiceDate\": 1583835701810, \n\t\t\"square\": 777\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:41:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1ae6ed5ace13c1d114b9e41c4bf0d172"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e-QYBujBIMw6b/68MX3PYLRC+qH60\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"create\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 14\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "getAll(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"getAll\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"filter\": {\n\t\t\t\"street\":\"Шев\",\n\t\t\t\"number\": 5\n\t\t\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 08:14:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6ea0e7c7fe1693e86ef168d74cd05840"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"356-eqnYAvUi7QfFRg3syruAdOU3SDw\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"getAll\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"data\": [\n            {\n                \"id\": 10,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 8577,\n                \"totalQty\": 0,\n                \"balance\": 0\n            },\n            {\n                \"id\": 11,\n                \"street_name\": \"Шевшенко\",\n                \"street_id\": 11325,\n                \"city_id\": 1105,\n                \"number\": 5,\n                \"number_add\": \"\",\n                \"inServiceDate\": 1579772607000,\n                \"updateObjectDate\": 1579772607000,\n                \"hoaName\": \"ЖК Южный\",\n                \"cityName\": \"м. Чорноморськ\",\n                \"hoaId\": 2,\n                \"type\": \"mixed\",\n                \"totalSquare\": 1488,\n                \"totalQty\": 0,\n                \"balance\": 0\n            }\n        ],\n        \"meta\": {\n            \"offset\": null,\n            \"total\": 2\n        },\n        \"totalBalance\": 0,\n        \"totalBuildings\": 12,\n        \"hoas\": [\n            {\n                \"id\": 1,\n                \"name\": \"ЖК Вернисаж\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"ЖК Южный\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+						},
+						{
+							"name": "create(200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5OWZjNDVhLWI1MzktNGQxNS04ODViLTNkMDUzMzYwZDlkYyIsImV4cCI6MTU4Mzk0MTI4NSwiaWF0IjoxNTgzODU0ODg1fQ.d9hFDaduTYJPXCNtT5KwaixxMIXGs7tXt0P3vjs0sMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"action\": \"building\",\n\t\"method\": \"delete\",\n\t\"tid\": 1,\n\t\"type\": \"rpc\",\n\t\"data\": {\n\t\t\"id\": 149\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.api.hm.ossystem.ua/api/admin",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"api",
+										"hm",
+										"ossystem",
+										"ua"
+									],
+									"path": [
+										"api",
+										"admin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Mar 2020 10:45:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "416ca9f7bc4387ffb545a20520532138"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5f-YMkhZbPWZ71d6mR/ZxGelDAT5Cg\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"tid\": 1,\n    \"action\": \"building\",\n    \"method\": \"delete\",\n    \"type\": \"rpc\",\n    \"result\": {\n        \"id\": 149\n    },\n    \"message\": null\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{DevToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9f4dfa3-12fa-4ac1-9942-977f2231abf1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e58604d-2422-49d9-8323-31c4fcadf4be",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{DevToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "eef18d0d-f7be-4b8c-b0ea-ac402bc3e5c5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "36b2873e-364e-4598-9455-43214ff958a7",
+				"type": "text/javascript",
+				"exec": [
+					"console.log(\"Start Test\")",
+					"",
+					"//1. Correct response format JSON",
+					"pm.test(\"Correct response format Json\", function() {",
+					"    pm.response.to.have.jsonBody()",
+					"    ",
+					"});",
+					"",
+					"",
+					"//2. Status Code is 200 ",
+					"    pm.test(\"Status Code is 200\", function(){",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"",
+					"",
+					"",
+					"//3. Status message is ok",
+					"pm.test(\"Status Code is OK\", function(){",
+					"    pm.response.to.have.status(\"OK\");",
+					"});",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a0fdc55a-4a27-4391-8a39-b22c9957f8f7",
+			"key": "DevToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhZTkxZjVhLTYzMzItMTFlYS1iYzU1LTAyNDJhYzEzMDAwMyIsImV4cCI6MTU4NTA0MjA5NSwiaWF0IjoxNTg1MDQxNDk1fQ.leO-DYNF1ppz6Oh38ED6DowrOWGYRpZaCZdP9Tb5F0s",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "5799006c-7bba-4468-bf15-80849c53e36f",
+			"key": "url",
+			"value": "1212",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "891836b2-713e-44af-9c00-1315282c57ee",
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "c544289c-59ac-4ad1-b5c7-9bf3c765d515",
+			"key": "BuildingId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4a67b540-cbbe-49c2-818b-aaf370be3d8c",
+			"key": "BuildId",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
