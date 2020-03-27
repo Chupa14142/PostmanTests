@@ -307,37 +307,37 @@
 	],
 	"variable": [
 		{
-			"id": "24229648-b7fa-4ef7-9afe-d51bb78ef0e0",
+			"id": "ff2f8af6-a82e-47c5-872e-6847e96dc5a7",
 			"key": "MobileAccessToken",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "98ace2a0-d2aa-4444-b37f-4114aa8e9d4c",
+			"id": "e16e671b-f5a8-4e36-a99a-0ba6ae4576bf",
 			"key": "MobileRefreshToken",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "133969a8-c0f0-4b24-9f66-b2d2ed171ef1",
+			"id": "0b8f3e3e-318a-4531-9496-b51232db5fd1",
 			"key": "NewMobileAccessToken",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "6daf9ab4-96f9-4413-ba13-14d9753ebf80",
+			"id": "0472a14d-f383-4cf1-96df-26349d5c21b9",
 			"key": "NewMobileRefreshToken",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "696505fe-de70-42df-a75b-911acd815cdd",
+			"id": "6ca2383f-d87e-4102-8e2e-f70e6d724a72",
 			"key": "randomInt",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "69b14a47-161e-4a94-8465-3e6eeb12e6a9",
+			"id": "1d7df0bb-48b5-45e1-8406-8199acb5eae4",
 			"key": "randomService",
 			"value": "",
 			"type": "string"
